@@ -1,67 +1,223 @@
 const COMMANDS = [
+    // --- CATEGORÍA: REGISTRO Y SERVICIO ---
     {
-        name: "/fichar entrada",
+        name: "/fichar",
         category: "registro",
-        description: "Inicia tu turno de guardia en el sistema. Registra hora de entrada y notifica en el canal de actividad.",
-        params: []
-    },
-    {
-        name: "/fichar salida",
-        category: "registro",
-        description: "Finaliza el turno de servicio. Computa los minutos operados y los envía al registro general de SQL.",
-        params: []
+        description: "Inicia o finaliza tu turno de guardia en el sistema computando las horas de servicio.",
+        params: [
+            { name: "tipo", desc: "Entrada o Salida de servicio" }
+        ]
     },
     {
         name: "/ficharem",
         category: "registro",
-        description: "Comando reservado para que el Estado Mayor ajuste o cierre manualmente un turno colgado de un efectivo.",
+        description: "Comando de supervisión para que el Estado Mayor cierre o ajuste turnos de otros efectivos.",
         params: [
-            { name: "usuario", desc: "Mención del miembro a modificar" },
-            { name: "accion", desc: "Forzar cierre o anulación de turno" }
+            { name: "usuario", desc: "Soldado a modificar turno" }
         ]
     },
+    {
+        name: "/horas",
+        category: "registro",
+        description: "Muestra el total de horas de servicio acumuladas por un soldado en el ciclo actual.",
+        params: [
+            { name: "usuario", desc: "Opcional: consultar a otro miembro" }
+        ]
+    },
+    {
+        name: "/horas-minimas",
+        category: "registro",
+        description: "Establece o consulta el requisito de horas mínimas obligatorias para la tropa.",
+        params: [
+            { name: "cantidad", desc: "Horas requeridas semanales/mensuales" }
+        ]
+    },
+    {
+        name: "/historial-top",
+        category: "registro",
+        description: "Despliega el escalafón de honor con los efectivos que acumulan más horas en servicio.",
+        params: []
+    },
+    {
+        name: "/panel-servicio",
+        category: "registro",
+        description: "Despliega el panel interactivo con botones para entrar y salir de guardia rápidamente.",
+        params: []
+    },
+
+    // --- CATEGORÍA: EXPEDIENTES Y DOCUMENTAL ---
     {
         name: "/expediente",
         category: "documental",
-        description: "Consulta el historial de un soldado: horas acumuladas, sanciones activas, división y rango actual.",
+        description: "Consulta la ficha técnica de un efectivo: rango, división, placa, horas y sanciones.",
         params: [
-            { name: "efectivo", desc: "Soldado a consultar (por mención o ID)" }
+            { name: "usuario", desc: "Mención o ID del soldado" }
         ]
     },
     {
+        name: "/crear-expediente",
+        category: "documental",
+        description: "Genera y da de alta un nuevo expediente militar en la base de datos central.",
+        params: [
+            { name: "usuario", desc: "Miembro a registrar" },
+            { name: "codigo", desc: "Placa o indicativo asignado" }
+        ]
+    },
+    {
+        name: "/registrar",
+        category: "documental",
+        description: "Asienta una anotación formal o registro de mérito en el expediente de un soldado.",
+        params: [
+            { name: "usuario", desc: "Soldado implicado" },
+            { name: "motivo", desc: "Detalle del registro" }
+        ]
+    },
+    {
+        name: "/eliminar-registro",
+        category: "documental",
+        description: "Elimina una anotación o entrada errónea de la base de datos de expedientes.",
+        params: [
+            { name: "id_registro", desc: "Identificador del registro a suprimir" }
+        ]
+    },
+    {
+        name: "/listar-tropa",
+        category: "documental",
+        description: "Genera el censo general de efectivos activos clasificados por división y graduación.",
+        params: []
+    },
+    {
+        name: "/panel-bitacoras",
+        category: "documental",
+        description: "Publica el panel administrativo para la redacción de informes y bitácoras operativas.",
+        params: []
+    },
+
+    // --- CATEGORÍA: ALTO MANDO Y ADMINISTRACIÓN ---
+    {
         name: "/solicitar-firma",
         category: "mando",
-        description: "Envía una propuesta formal al Estado Mayor Supremo con botones interactivos para su autorización o rechazo.",
+        description: "Envía una propuesta formal al Estado Mayor que requiere sello y autorización digital.",
         params: [
-            { name: "asunto", desc: "Título o resumen de la petición" },
-            { name: "detalles", desc: "Explicación detallada del requerimiento" }
+            { name: "asunto", desc: "Título de la propuesta" },
+            { name: "detalles", desc: "Explicación detallada del documento" }
         ]
     },
     {
         name: "/enlistar",
         category: "mando",
-        description: "Asigna las credenciales iniciales, rol de Recruit y ficha militar básica a un civil aceptado por formulario.",
+        description: "Da de alta a un nuevo recluta en el sistema y le confiere el rol base de Academia.",
         params: [
-            { name: "usuario", desc: "Usuario admitido en el servidor" },
-            { name: "codigo", desc: "Indicativo o placa táctica asignada" }
+            { name: "usuario", desc: "Civil aceptado" },
+            { name: "codigo", desc: "Indicativo inicial" }
+        ]
+    },
+    {
+        name: "/asignar-placa",
+        category: "mando",
+        description: "Modifica o asigna oficialmente el código numérico de placa militar a un efectivo.",
+        params: [
+            { name: "usuario", desc: "Soldado a asignar" },
+            { name: "placa", desc: "Número de identificación (ej: 0004)" }
+        ]
+    },
+    {
+        name: "/baja-soldado",
+        category: "mando",
+        description: "Tramita la baja administrativa, retiro voluntario o expulsión de las filas de la FDN.",
+        params: [
+            { name: "usuario", desc: "Efectivo a degradar/retirar" },
+            { name: "motivo", desc: "Causa de la desvinculación" }
+        ]
+    },
+    {
+        name: "/ck",
+        category: "mando",
+        description: "Registra la baja definitiva por muerte en servicio (Character Kill) y archiva el expediente.",
+        params: [
+            { name: "usuario", desc: "Efectivo caído" },
+            { name: "causa", desc: "Informe de defunción táctico" }
+        ]
+    },
+    {
+        name: "/ver-limite-em",
+        category: "mando",
+        description: "Consulta las cuotas máximas y disponibilidad de plazas para oficiales del Estado Mayor.",
+        params: []
+    },
+    {
+        name: "/panel-tickets",
+        category: "mando",
+        description: "Despliega el centro de atención interactivo para consultas y denuncias internas.",
+        params: []
+    },
+
+    // --- CATEGORÍA: DISCIPLINA Y JUSTICIA MILITAR ---
+    {
+        name: "/sancionar",
+        category: "disciplina",
+        description: "Aplica deméritos, faltas disciplinarias o arrestos militares al expediente del infractor.",
+        params: [
+            { name: "usuario", desc: "Efectivo sancionado" },
+            { name: "falta", desc: "Infracción cometida al reglamento" }
         ]
     },
     {
         name: "/justificar",
-        category: "academia",
-        description: "Registra una inasistencia formal con antelación ante una convocatoria oficial de la Academia Militar.",
+        category: "disciplina",
+        description: "Presenta una ausencia formal con antelación ante convocatorias de guardia o academia.",
         params: [
-            { name: "motivo", desc: "Razón de fuerza mayor de la ausencia" },
-            { name: "fecha", desc: "Día de la sesión a justificar" }
+            { name: "motivo", desc: "Causa de fuerza mayor justificada" },
+            { name: "fecha", desc: "Fecha de la inasistencia" }
         ]
     },
     {
-        name: "/sancionar",
-        category: "academia",
-        description: "Aplica deméritos o apercibimientos disciplinarios al expediente de un recluta o efectivo de tropa.",
+        name: "/justificaciones",
+        category: "disciplina",
+        description: "Revisa y gestiona la lista de solicitudes de ausencia pendientes de resolución.",
+        params: []
+    },
+
+    // --- CATEGORÍA: DIVISIÓN AÉREA (AIR FORCE) ---
+    {
+        name: "/aeronave-registrar",
+        category: "aerea",
+        description: "Inscribe una nueva aeronave en el hangar militar asignándole matrícula y modelo.",
         params: [
-            { name: "usuario", desc: "Mención del sancionado" },
-            { name: "infraccion", desc: "Falta al reglamento o Código Militar" }
+            { name: "matricula", desc: "Identificador de fuselaje" },
+            { name: "modelo", desc: "Caza, helicóptero o transporte" }
+        ]
+    },
+    {
+        name: "/aeronave-consultar",
+        category: "aerea",
+        description: "Comprueba el estado de operatividad, hangar y piloto asignado a una aeronave.",
+        params: [
+            { name: "matricula", desc: "Código de cola de la unidad aérea" }
+        ]
+    },
+
+    // --- CATEGORÍA: SOPORTE Y SISTEMA ---
+    {
+        name: "/ayuda",
+        category: "soporte",
+        description: "Despliega la guía de orientación rápida y funciones del bot dentro de Discord.",
+        params: []
+    },
+    {
+        name: "/add-emoji",
+        category: "soporte",
+        description: "Herramienta técnica para vincular nuevos emojis personalizados al bot.",
+        params: [
+            { name: "emoji", desc: "Código o icono a integrar" }
+        ]
+    },
+    {
+        name: "/get-emoji",
+        category: "soporte",
+        description: "Consulta el identificador numérico interno (ID) de un emoji del servidor.",
+        params: [
+            { name: "nombre", desc: "Etiqueta del emoji" }
         ]
     }
 ];
@@ -152,5 +308,4 @@ pills.forEach(pill => {
     });
 });
 
-// Render inicial
 renderCommands();

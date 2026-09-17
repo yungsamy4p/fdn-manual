@@ -1,3 +1,8 @@
+// CODIGO ABIERTO BY YUNG SAMY - DISCORD: likeadversario
+// GITHUB: https://github.com/yungsamy4p/fdn-portal
+// INSTAGRAM: https://www.instagram.com/yungsamy4p
+
+
 const COMMANDS = [
     // --- CATEGORÍA: REGISTRO Y SERVICIO ---
     {

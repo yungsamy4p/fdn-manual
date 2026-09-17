@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDN — Manual de Operaciones del Bot Táctico</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="tactical-header">
+        <div class="header-content">
+            <div class="insignia-box">
+                <span class="nato-code">FDN-SYS // 0004</span>
+                <h1>MANUAL DEL SISTEMA BOT</h1>
+                <p>Centro de Comando, Control y Telecomunicaciones — Doctrina Virtus</p>
+            </div>
+            <div class="system-status">
+                <span class="status-dot"></span> RED DISCORD ONLINE
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Barra de búsqueda y filtros -->
+        <section class="controls-panel">
+            <input type="text" id="searchInput" placeholder="Filtrar comando por nombre o parámetro (ej: /fichar, expediente)..." autocomplete="off">
+            
+            <div class="filter-pills">
+                <button class="pill active" data-category="all">Todos</button>
+                <button class="pill" data-category="registro">Fichaje & Guardia</button>
+                <button class="pill" data-category="documental">Expedientes & Consultas</button>
+                <button class="pill" data-category="mando">Alto Mando & Firmas</button>
+                <button class="pill" data-category="academia">Academia & Disciplina</button>
+            </div>
+        </section>
+
+        <!-- Contenedor de Comandos Dinámicos -->
+        <section class="command-grid" id="commandGrid">
+            <!-- Renderizado dinámicamente con JS -->
+        </section>
+    </main>
+
+    <footer class="tactical-footer">
+        <p>FUERZA DE DEFENSA NACIONAL • DEPARTAMENTO DE SECRETARÍA Y TECNOLOGÍAS DE LA INFORMACIÓN</p>
+        <p class="subtext">USO EXCLUSIVO PARA EFECTIVOS ACTIVOS EN FORT ZANCUDO</p>
+    </footer>
+
+    <div id="toast" class="toast">Comando copiado al portapapeles</div>
+
+    <script src="app.js"></script>
+</body>
+</html>

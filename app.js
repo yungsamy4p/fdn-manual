@@ -2,7 +2,6 @@
 // GITHUB: https://github.com/yungsamy4p/fdn-portal
 // INSTAGRAM: https://www.instagram.com/yungsamy4p
 
-
 const COMMANDS = [
     // --- CATEGORÍA: REGISTRO Y SERVICIO ---
     {
@@ -57,6 +56,15 @@ const COMMANDS = [
         description: "Consulta la ficha técnica de un efectivo: rango, división, placa, horas y sanciones.",
         params: [
             { name: "usuario", desc: "Mención o ID del soldado" }
+        ]
+    },
+    {
+        name: "/migrar-expediente",
+        category: "documental",
+        description: "Detecta automáticamente el rango y división del soldado para abrir su expediente en el foro.",
+        params: [
+            { name: "soldado", desc: "Mención del efectivo" },
+            { name: "placa", desc: "Número de placa asignada" }
         ]
     },
     {
@@ -199,6 +207,44 @@ const COMMANDS = [
         description: "Comprueba el estado de operatividad, hangar y piloto asignado a una aeronave.",
         params: [
             { name: "matricula", desc: "Código de cola de la unidad aérea" }
+        ]
+    },
+
+    // --- CATEGORÍA: DEPÓSITO VEHICULAR (PDA) ---
+    {
+        name: "/pda",
+        category: "vehicular",
+        description: "Registra la incautación de un vehículo en el depósito de Fort Zancudo con foto probatoria.",
+        params: [
+            { name: "nombre_propietario", desc: "Titular civil del vehículo" },
+            { name: "patente", desc: "Matrícula o placa patente" },
+            { name: "motivo", desc: "Causa pericial de la retención" },
+            { name: "foto_auto", desc: "Adjunto fotográfico del vehículo" }
+        ]
+    },
+    {
+        name: "/pda-registro",
+        category: "vehicular",
+        description: "Despliega el catálogo de vehículos incautados con fecha, patente, titular y agente.",
+        params: [
+            { name: "limite", desc: "Opcional: número de registros a listar" }
+        ]
+    },
+    {
+        name: "/pda-inspeccion",
+        category: "vehicular",
+        description: "Consulta el acta pericial detallada y visualiza la fotografía de un automóvil incautado.",
+        params: [
+            { name: "id", desc: "Identificador numérico de la incautación" }
+        ]
+    },
+    {
+        name: "/pda-borrar",
+        category: "vehicular",
+        description: "Tramita la liberación, baja o retiro formal de un vehículo del depósito militar.",
+        params: [
+            { name: "id", desc: "Identificador de la incautación a eliminar" },
+            { name: "motivo", desc: "Opcional: causa de la liberación/fianza" }
         ]
     },
 

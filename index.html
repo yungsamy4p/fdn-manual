@@ -34,7 +34,7 @@
     <main class="container">
         <!-- Barra de búsqueda y filtros -->
         <section class="controls-panel">
-            <input type="text" id="searchInput" placeholder="Filtrar comando por nombre o parámetro (ej: /fichar, expediente)..." autocomplete="off">
+            <input type="text" id="searchInput" placeholder="Filtrar comando por nombre o parámetro (ej: /fichar, pda, expediente)..." autocomplete="off">
             
             <div class="filter-pills">
                 <button class="pill active" data-category="all">Todos</button>
@@ -43,11 +43,12 @@
                 <button class="pill" data-category="mando">Alto Mando & Bajas</button>
                 <button class="pill" data-category="disciplina">Disciplina & Permisos</button>
                 <button class="pill" data-category="aerea">Fuerza Aérea</button>
+                <!-- NUEVA CATEGORÍA VEHICULAR INTEGRADA -->
+                <button class="pill" data-category="vehicular">Depósito & Vehículos</button>
                 <button class="pill" data-category="soporte">Soporte & Sistema</button>
             </div>
         </section>
 
-        
         <section class="command-grid" id="commandGrid">
             
         </section>
